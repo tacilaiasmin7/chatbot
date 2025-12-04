@@ -39,12 +39,32 @@
 <body>
     <div id="container">
         <h2>ChatBot da Enfermagem</h2>
-        <input id="caixa" type="text" placeholder="Digite sua pergunta...">
-        <button onclick="Gemini()">Enviar</button>
+        <input id="caixa" type="text" placeholder="Digite sua pergunta..."><br>
+        <button onclick="Gemini()">Enviar</button><br>
+        <button onclick="LimparChat()">Limpar Chat</button><br>
+        <button onclick="aumentarFonte()">A+</button><br>
+        <button onclick="diminuirFonte()">A-</button><br>
         <div id="chat"></div>
     </div>
 
     <script>
+
+        function LimparChat() {
+            document.getElementById("chat").innerHTML="";
+        }
+
+
+        function aumentarFonte() {
+                tamanhoFonte +=2;
+                document.getElementById("chat").style.fontSize = tamanhoFonte + "px";
+            }
+
+            function diminuirFonte() {
+              tamanhoFonte -= 2;
+              if (tamanhoFonte < 10) tamanhoFonte = 10;
+              document.getElementById("chat").style.fontSize = tamanhoFonte + "px"; 
+            }
+
         function EnviarMensagem(texto, classe) {
             const chat = document.getElementById("chat");
             const p = document.createElement("p");
@@ -54,13 +74,17 @@
             chat.scrollTop = chat.scrollHeight;
         }
 
-        function Gemini() {
+            let tamanhoFonte = 16;
+        
+        
+
+            function Gemini() {
             const input = document.getElementById("caixa");
             const mensagem = input.value.trim();
             if (mensagem === "") return;
 
             // mostra mensagem do usuário
-            EnviarMensagem("Você: " + mensagem, "user");
+            EnviarMensagem("Alunos: " + mensagem, "user");
 
             input.value = "";
 
@@ -72,13 +96,14 @@
             })
             .then(res => res.text())
             .then(resposta => {
-                EnviarMensagem("Bot: " + resposta, "bot");
+                EnviarMensagem("Xmatech: " + resposta, "bot");
             })
             .catch(err => {
                 EnviarMensagem("Erro ao conectar ao servidor.", "bot");
                 console.error(err);
             });
-        }
+
+            }
     </script>
 </body>
 </html>
