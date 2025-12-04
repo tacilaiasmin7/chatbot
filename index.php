@@ -1,16 +1,8 @@
 <?php
 
-header("Contetnt Type: application/json");
+header("Content-Type: text/plain; charset=UTF-8");
 
-
-
-$mensagem = $_POST["mensagem"] ?? "";
-
-
-
-
-
-$api_key = "AIzaSyAUcQ_PjAZLEZRqzytpdYUnr23dftTHTSg";
+$apiKey = ""; // coloque sua API KEY aqui
 
 $prompt = $_POST["mensagem"] ?? "";
 
@@ -19,9 +11,9 @@ if (!$prompt) {
     exit;
 }
 
-$url = "https://generativelanguage.googleapis.com/v1beta/models/gemini=2.0-flash:generateContent?key=" . "api_key";
+$url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" . $apiKey;
 
-
+// Corpo da requisição
 $data = [
     "contents" => [
         [
