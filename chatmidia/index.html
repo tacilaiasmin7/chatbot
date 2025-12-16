@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Chat Mídia</title>
+<style>
+    body {
+        margin: 50px;
+        background-image: url(download.gif);
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+        top: 90px;
+        display: flex;
+        justify-content: center;
+        max-height: 100vh;
+    }
+
+    h1{
+        color: rgb(161, 9, 161);
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .chatbox {
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.5);
+       padding: 20px;
+        border-radius: 10px;
+        height: 50%;
+        width: 50%;
+        
+    }
+   
+    button {
+        background-color: lightblue;
+        color: black;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 30%;
+        height: 30%;
+    }
+
+@media (min-width:480px) {
+            body {
+               background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .chatbox {
+                flex-direction: column;
+                gap: 8px;
+                width: 50%;
+                height: 100%;
+            }
+        }
+
+</style>
+</head>
+<body>
+
+<div class="chatbox">
+    <h1>Chat Mídia</h1>
+    <button onclick="ouvir()">Falar Agora</button>
+</div>
+
+<script>
+const pergunta = ["oliguria","paciente", "cirurgia", "bronquite", "bacteriana"];
+
+const resposta = ["Diminuição de débito urinário.", "Identificar corretamente o paciente, Melhorar a comunicação entre os profissionais de saúde, Garantir a segurança na prescrição no uso e na administração de medicamentos,Garantir cirurgia segura no paciente, Local e procedimento correto, Reduzir o risco de infecção e reduzir o risco de quedas.", "Eletiva, Urgência e Emergência.", "Bronquite Aguda e Bronquite Crônica.", "É uma infecção grave causada por bactérias que atinge as meninges, que são membranas que envolvem o cérebro e a medula espinhal. Ela é diferente da meningite viral, que costuma ser mais leve. A bactéria costuma evoluir rápido e colocar a vida em risco de não for tratada a tempo"];
+
+function falar(texto) {
+    const discurso = new SpeechSynthesisUtterance(texto);
+
+    discurso.lang = "pt-BR";
+
+    discurso.rate = 1;
+
+    window.speechSynthesis.speak(discurso);
+}
+
+function ouvir() {
+    const reconhecer = new webkitSpeechRecognition();
+
+    reconhecer.lang = "pt-BR";
+
+    reconhecer.start();
+
+    reconhecer.onresult = function(event) {
+
+        const textoFalado = event.results[0][0].transcript.toLowerCase();
+
+      for (let i = 0; i < pergunta.length; i++) {
+                    if (textoFalado.includes(pergunta[i])) {
+                        falar(resposta[i]);
+                        return;
+                    }
+                }
+            falar("Desculpe, eu não estou entendendo");
+        }
+    };
+
+
+</script>
+</body>
+
+</html>
